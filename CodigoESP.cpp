@@ -646,7 +646,7 @@ void setup()
   Serial.println();
   Serial.println(F("================================"));
   Serial.println(F("     LAUNCH SAFETY CONTROLLER"));
-  Serial.println(F("            ARDUINO UNO"));
+  Serial.println(F("              ESP32"));
   Serial.println(F("              V7.0"));
   Serial.println(F("================================"));
 

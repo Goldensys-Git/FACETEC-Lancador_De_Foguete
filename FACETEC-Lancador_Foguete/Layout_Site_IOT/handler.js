@@ -3,10 +3,10 @@ SCRIPT PRINCIPAL DO PROJETO
 ESCOPO DO PROJETO:
 TODO:
 
--Medidor de umidade baseado em barra de progresso animada. (% do progresso x 1.8)
+-Medidor de pressão baseado em barra de progresso animada. (% do progresso x 1.8)
 -pop up ao entrar na página pedindo uma senha hardcoded no ESP que será dada aos apresentadores, a senha é enviada para o ESP, se for validada, o pop up fecha
 e a senha é salva no navegador (possíveis cookies), assim liberando os controles para o apresentador
--Pegar os elementos a serem modificados (Umidade, Regador (on/off), Estufa (On,off) e temperatura) com FETCH, e dar display no HTML.
+-Pegar os elementos a serem modificados (Pressão, STATUS, ) com FETCH, e dar display no HTML.
 -Quando a senha registrada é correta os botôes são liberados, e juntamente aos comandos a senha é enviada para validação no ESP
 
 */
@@ -30,8 +30,6 @@ const Botao_Lancamento = document.querySelector(".botao-lancamento");
 const Botao_Abortar = document.querySelector(".botao-abortar");
 
 
-//VARIAVEL PARA REPOSICIONAR A TEMPERATURA
-const Temperatura_Row = document.getElementById("para-centro");
 
 
 //CONFIGURAÇÕES DE LOGIN
@@ -43,11 +41,10 @@ function Autorizado() {
 }
 
 function SouVisitante() {
-    Temperatura_Row.classList.replace("col-4", "col-12");
     Popup_Senha.style.display = "none";
 }
 
-function MostrarSenhaInvalida(){
+function MostrarSenhaInvalida() {
     Display_Senha_Invalida.style.display = "flex";
 }
 
@@ -86,7 +83,7 @@ function ValidarSenha(TentativaSenha) {
         });
 }
 
-function SenhaSalva(){
+function SenhaSalva() {
     return sessionStorage.getItem("SenhaAutorizada");
 }
 
@@ -104,74 +101,53 @@ Botao_Sou_Visitante.addEventListener("click", () => {
 })
 
 
-//Definições da Umidade
-const Umidade_Progress = document.querySelector(".progress-circle-umidade");
+//Definições da pressao
+const Pressao_Progress = document.querySelector(".progress-circle-pressao");
 
-const Umidade_Progress_Text = document.querySelector(".progress-value-umidade");
+const Pressao_Progress_Text = document.querySelector(".progress-value-pressao");
 
-let Umidade_Valor_Atual = 0;
+let Pressao_Valor_Atual = 0;
 
-let Umidade_Animacao;
+let Pressao_Animacao;
 
-function UpdateUmidade(NewValue) {
+function UpdatePressao(NewValue) {
 
     let Velocidade = 20;
 
-    clearInterval(Umidade_Animacao);
-    Umidade_Animacao = setInterval(() => {
+    clearInterval(Pressao_Animacao);
+    Pressao_Animacao = setInterval(() => {
 
-        if (Umidade_Valor_Atual < NewValue) {
+        if (Pressao_Valor_Atual < NewValue) {
 
-            Umidade_Valor_Atual++;
+            Pressao_Valor_Atual++;
 
-        } else if (Umidade_Valor_Atual > NewValue) {
+        } else if (Pressao_Valor_Atual > NewValue) {
 
-            Umidade_Valor_Atual--;
+            Pressao_Valor_Atual--;
 
         } else {
 
-            clearInterval(Umidade_Animacao);
+            clearInterval(Pressao_Animacao);
 
             return;
 
         }
-        let CalculoGraus = Umidade_Valor_Atual * 1.8;
-        Umidade_Progress_Text.textContent = `${Umidade_Valor_Atual}%`;
+        let CalculoGraus = Pressao_Valor_Atual * 1.8;
+        Pressao_Progress_Text.textContent = `${Pressao_Valor_Atual}%`;
 
-        Umidade_Progress.style.setProperty("--progress", `${CalculoGraus}deg`);
+        Pressao_Progress.style.setProperty("--progress", `${CalculoGraus}deg`);
 
-    }, velocidade);
+    }, Velocidade);
 
 }
 
- //Definições da Temperatura
- const Temperatura_Progress = document.querySelector(".progress-circle-temperatura");
- const Temperatura_Progress_Text = document.querySelector(".progress-value-temperatura");
 
- let Temperatura_Atual = 0;
+//Definições de Status
 
- /**
- * 
- * @param {string} NovoValor
- * 
- */
- function UpdateTemperatura(NovoValor ) {
-    Temperatura_Atual = NovoValor.toUpperCase()
-    Temperatura_Progress_Text.textContent = `${Temperatura_Atual}°C`
- }
+const Status_Progress = document.querySelector(".progress-circle-status")
+const Status_Progress_Text = document.querySelector(".progress-value-status")
 
-
- /*
-    TODO:
-    -Se der tempo, colocar uma animaçãozinha de mudança de cor Background para vermelho quando temperatura maior igual a 30
- */ 
-
-
-//Definições da Estufa
-const Estufa_Progress = document.querySelector("progress-circle-estufa");
-const Estufa_Progress_Text = document.querySelector("progress-value-estufa");
-
-let Estufa_Estado_Atual;
+let Status_Estado_Atual;
 
 /**
  * 
@@ -179,32 +155,75 @@ let Estufa_Estado_Atual;
  * 
  */
 
-function UpdateEstufaStatus(NovoStatus) {
-    Estufa_Estado_Atual = NovoStatus.toUpperCase();
-    Estufa_Progress_Text.textContent = Estufa_Estado_Atual
+function UpdateCurrentStatus(NovoStatus) {
+    Status_Estado_Atual = NovoStatus.toUpperCase();
+    Status_Progress_Text.textContent = Status_Estado_Atual
 }
 
-/**
- * Colocar background Verde para estufa aberta e vermelho para estufa fechada
- */
+function AumentaTextoStatus() {
+    Status_Progress_Text.style.setProperty("font-size", "larger")
+}
 
-
-
-//Definições do Regador
-const Regador_Progress = document.querySelector("progress-circle-regador");
-const Regador_Progress_Text = document.querySelector("progress-value-regador");
-
-let Regador_Estado_Atual;
-
-function UpdateRegadorStatus(NovoStatus) {
-    Regador_Estado_Atual = NovoStatus.toUpperCase();
-    Regador_Progress_Text.textContent = Regador_Estado_Atual;
+function DiminuiTextoStatus() {
+    Status_Progress_Text.style.setProperty("font-size", "large")
 }
 
 
+
+
+
+
+
+//Definições De CountDown
+const Countdown_Progress = document.querySelector(".progress-circle-countdown")
+const Countdown_Progress_Text = document.querySelector(".progress-value-countdown")
+
 /**
- * Colocar background Verde para regador ligado e vermelho para regador fechado
+ * @param {string} NovoStatus
  */
+function UpdateCountDownValue(NovoStatus) {
+    Countdown_Progress_Text.textContent = NovoStatus
+}
+
+function AumentaTextoCountdown() {
+    Countdown_Progress_Text.style.setProperty("font-size", "larger");
+}
+
+function DiminuiTextoCountdown() {
+    Countdown_Progress_Text.style.setProperty("font-size", "large")
+}
+
+
+
+
+//Definições de avisos customizados
+const Aviso_Texto = document.querySelector(".custom-mensagem")
+const Popup_Texto = document.querySelector(".popup-custom-message")
+let TimeOutAtual;
+/**
+ * 
+ * @param {string} Texto 
+ * @param {number} Duracao 
+ */
+function DisplayCustomMessage(Texto, Duracao) {
+    Aviso_Texto.textContent = `AVISO: ${Texto}`
+    Aviso_Texto.style.setProperty("display", "block");
+    Popup_Texto.textContent = `AVISO: ${Texto}`
+    Popup_Texto.style.setProperty("display", "block")
+
+    if (TimeOutAtual) {
+        clearTimeout(TimeOutAtual);
+    }
+
+    if (Duracao && Number(Duracao)) {
+        TimeOutAtual = setTimeout(() => {
+            Aviso_Texto.style.setProperty("display", "none")
+            Popup_Texto.style.setProperty("display", "none")
+
+        }, Number(Duracao))
+    }
+
+}
 
 
 /**
@@ -212,65 +231,100 @@ function UpdateRegadorStatus(NovoStatus) {
  * @param {string} botao
  * @param {boolean} valor
  */
-//Definições dos botoes
-function DisplayBotaoAcao(botao, ligado){
-    if (botao.toLowerCase() === "estufa") {
-        if (ligado === true) { //Se ligado então está aberto
-            Botao_Abortar.textContent = "FECHAR ESTUFA"
-        }
-        else {
-            Botao_Abortar.textContent = "ABRIR ESTUFA"
-        }
-    }
-
-    if (botao.toLowerCase() === "regador") {
-        if (ligado === true) { //Se ligado então está ligado
-            Botao_Lancamento.textContent === "DESATIVAR REGADOR"
-        }
-        else {
-            Botao_Lancamento.textContent === "ATIVAR REGADOR"
-        }
-    }
-}
 
 
-
-
-//Definições Status
-
-function GetStatus(){
+//FETCH STATUS DO ESP
+async function GetStatusFromESP() {
     //GET DE TODOS OS STATUS
-    let Status;
-    fetch("/status", 
-        {method: "GET"
-        }
-    ).then((Resposta) => Resposta.json())
-    .then((Json) => {
-        Status = Json
-    })
+    try {
 
-    return Status;
+        const Resposta = await fetch("/status",
+            {
+                method: "GET"
+            }
+        )
+
+        const Status = await Resposta.json()
+        return Status
+
+    } catch (error) {
+        DisplayCustomMessage("Sem Conexão Com o Servidor.")
+    }
+
+
+    // let Status;
+    // fetch("/status", 
+    //     {method: "GET"
+    //     }
+    // ).then((Resposta) => Resposta.json())
+    // .then((Json) => {
+    //     Status = Json
+    // })
+
+    // return Status;
 }
 
 let CurrentStatus;
-function UpdateDisplayTela(){
-    CurrentStatus = GetStatus();
-    UpdateUmidade(CurrentStatus.umidade)
-    UpdateTemperatura(CurrentStatus.temperatura)
-    UpdateRegadorStatus(CurrentStatus.regador)
-    UpdateEstufaStatus(CurrentStatus.estufa)
+async function UpdateDisplayTela() {
+    CurrentStatus = await GetStatusFromESP();
+    if (!CurrentStatus) {
+        return
+    }
+    UpdatePressao(CurrentStatus.pressao)
+    UpdateCurrentStatus(CurrentStatus.status)
+    UpdateCountDownValue(CurrentStatus.countdown)
 
-    if (CurrentStatus.regador === "ligado") {
-        DisplayBotaoAcao("regador", true)
+    if (CurrentStatus.message) {
+        if (CurrentStatus.messageduration) {
+            DisplayCustomMessage(CurrentStatus.message, CurrentStatus.messageduration);
+        }
+        else {
+            DisplayCustomMessage(CurrentStatus.message);
+        }
+    }
+
+    if (CurrentStatus.status.length >= 5) {
+        DiminuiTextoStatus()
     }
     else {
-        DisplayBotaoAcao("regador", false)
+        AumentaTextoStatus()
     }
 
-    if (CurrentStatus.estufa === "aberto"){
-        DisplayBotaoAcao("estufa", true)
+    if (CurrentStatus.countdown.length >= 5) {
+        DiminuiTextoCountdown()
     }
     else {
-        DisplayBotaoAcao("estufa", false)
+        AumentaTextoCountdown()
     }
 }
+
+setInterval(UpdateDisplayTela, 100);
+
+//Definições para iniciar lançamento
+
+//MANDAR POST NA ROTA START, E COM A SENHA DENTRO DO BODY
+/**        headers: {
+            "Content-Type": "application/json"
+        }, */
+
+//Pretendo não bloquear a requisição no front-end, mas fazer a validação apenas no servidor
+
+function IniciarLancamento() {
+    fetch("/start", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            comando: "lancamento",
+            senha: SenhaSalva()
+        })
+    })
+    .then((Resposta) => Resposta.json())
+    .then((json) => {
+        
+    })
+}
+
+
+

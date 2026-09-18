@@ -28,9 +28,16 @@
             <div class="row">
                 <div class="col-12 centertext" style="gap: 10px;">
                     <button class="botao-enviar-senha" >Enviar</button>
-                    <button class="botao-sou-visitante"  >Sou Visitante</button>
+                    <button class="botao-sou-visitante">Sou Visitante</button>
                 </div>
             </div>
+
+            <div class="row" style="margin-top: 15px;">
+                <div class="col-12 centertext">
+                    <h3 class="popup-custom-message"></h3>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -47,17 +54,28 @@
     <div class="container centertext" style="margin-top: 25px; gap: 65px;">
         <div class="progress-container">
             <div class="progress-circle-pressao">
-                <h1><span class="progress-value-pressao">50%</span></h1>
+                <h1><span class="progress-value-pressao">10%</span></h1>
                 <h2><span class="descritive-value">PRESSAO</span></h2>
             </div>
         </div>
 
+        
+        <div class="progress-container">
+            <div class="progress-circle-countdown">
+                <h3><span class="progress-value-countdown">AGUARDANDO</span></h3>
+                <h2><span class="descritive-value">COUNTDOWN</span></h2>
+            </div>
+        </div>
+        
         <div class="progress-container">
             <div class="progress-circle-status">
-                <h1><span class="progress-value-status">PRONTO</span></h1>
+                <h3><span class="progress-value-status">ABORTANDO</span></h3>
                 <h2><span class="descritive-value">STATUS</span></h2>
             </div>
         </div>
+
+        
+
 
     </div>
 
@@ -74,15 +92,20 @@
             <div class="centertext col-6">
                 <button class="botao-abortar">ABORTAR</button>
             </div>
-
-
-
-
         </div>
+
+
+        <div class="row" style="margin-top: 25px;"> 
+            <div class="col-12 centertext">
+                <h3><span class="custom-mensagem"></span></h3>
+            </div>
+        </div>
+
+
     </div>
 
     <script src="handler.js"></script>
-    <script src="script.js"></script>
+
 
 
 

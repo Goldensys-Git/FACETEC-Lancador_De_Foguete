@@ -100,23 +100,20 @@ body{
 
 
 .progress-circle-pressao,
-.progress-circle-estufa,
-.progress-circle-regador,
-.progress-circle-temperatura{
+.progress-circle-countdown,
+.progress-circle-status{
     width: 200px;
     height: 100px;
-    background-color: black;
     border-radius: 120px 120px 0 0;
 
     position: relative;
 
-    --progress: 90deg; /*Variável dentro da classe*/
+    --progress: 10deg; /*Variável dentro da classe*/
 }
 
+.progress-circle-status::before,
 .progress-circle-pressao::before,
-.progress-circle-estufa::before,
-.progress-circle-regador::before,
-.progress-circle-temperatura::before{
+.progress-circle-countdown::before{
   content: "";
   position: absolute;
   left: 50%;
@@ -134,28 +131,22 @@ body{
 .progress-circle-pressao{
       background: conic-gradient( 
       from 270deg at 50% 100%,
-      rgb(0, 195, 255) var(--progress),
+      rgb(251, 255, 0) var(--progress),
       rgb(94, 94, 94) var(--progress)
     );
 }
 
-.progress-circle-regador{
-  background-color: green;
-}
-
-.progress-circle-estufa{
-  background-color: green;
-
-}
-
-.progress-circle-temperatura{
+.progress-circle-countdown{
   background-color: red;
 }
 
-.progress-value-pressao,
-.progress-value-regador,
-.progress-value-estufa,
-.progress-value-temperatura{
+.progress-circle-status{
+  background-color: green;
+}
+
+.progress-value-countdown,
+.progress-value-status,
+.progress-value-pressao{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -170,6 +161,7 @@ body{
 .botao-abortar{
   display: none; /*esconde os botões*/
   width: 250px;
+  border-radius: 25px;
 }
 
 .descritive-value{
@@ -182,13 +174,13 @@ body{
 
 .botao-lancamento{
   background-color: rgb(64, 226, 49);
-  border-radius: 1px;
   border: none;
   color: white;
   text-align: center;
   font-size: 16px;
   font-weight: bold;
   padding: 15px 32px;
+
   
 }
 
@@ -201,7 +193,6 @@ body{
 
 .botao-abortar{
   background-color: rgb(248, 8, 8);
-  border-radius: 1px;
   border: none;
   color: white;
   text-align: center;
@@ -222,3 +213,11 @@ body{
   margin: 4px 2px;
   cursor: pointer;
 } */
+
+.custom-mensagem,
+.popup-custom-message{
+  color: red;
+  background-color: black;
+  font-weight: 200;
+  display: none;
+}
