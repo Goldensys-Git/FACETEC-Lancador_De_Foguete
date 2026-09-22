@@ -80,6 +80,8 @@ function ValidarSenha(TentativaSenha) {
             else {
                 MostrarSenhaInvalida();
             }
+        }).catch((error) => {
+            DisplayCustomMessage("Sem Conexão com o Servidor.")
         });
 }
 
@@ -90,10 +92,8 @@ function SenhaSalva() {
 
 Botao_Enviar.addEventListener("click", () => {
     const Tentativa_Senha = Senha_Digitada.value;
-
     //--PLACEHOLDER
-    Autorizado();
-    // ValidarSenha(Tentativa_Senha);
+    ValidarSenha(Tentativa_Senha);
 });
 
 Botao_Sou_Visitante.addEventListener("click", () => {
@@ -248,7 +248,8 @@ async function GetStatusFromESP() {
         return Status
 
     } catch (error) {
-        DisplayCustomMessage("Sem Conexão Com o Servidor.")
+        DisplayCustomMessage("Sem Conexão com o Servidor.")
+        return;
     }
 
 
@@ -290,7 +291,7 @@ async function UpdateDisplayTela() {
         AumentaTextoStatus()
     }
 
-    if (CurrentStatus.countdown.length >= 5) {
+    if (CurrentStatus.countdown >= 5) {
         DiminuiTextoCountdown()
     }
     else {
@@ -298,7 +299,7 @@ async function UpdateDisplayTela() {
     }
 }
 
-setInterval(UpdateDisplayTela, 100);
+setInterval(UpdateDisplayTela, 1000);
 
 //Definições para iniciar lançamento
 
@@ -309,22 +310,65 @@ setInterval(UpdateDisplayTela, 100);
 
 //Pretendo não bloquear a requisição no front-end, mas fazer a validação apenas no servidor
 
-function IniciarLancamento() {
-    fetch("/start", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            comando: "lancamento",
-            senha: SenhaSalva()
+async function IniciarLancamento() {
+    try {
+        const Reposta = await fetch("/start", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                comando: "lançamento",
+                senha: SenhaSalva()
+            })
         })
-    })
-    .then((Resposta) => Resposta.json())
-    .then((json) => {
-        
-    })
+
+        if (!Reposta.ok) {
+            DisplayCustomMessage("ERRO DE AUTENTICAÇÃO");
+            return
+        }
+
+        const json = await Reposta.json()
+
+        if (json) {
+            DisplayCustomMessage("AUTORIZADO LANÇAMENTO DO FOGUETE")
+        }
+
+    } catch (error) {
+        DisplayCustomMessage("Sem Conexão com o Servidor.")
+    }
 }
 
+async function AbortarLancamento() {
 
+    try {
+        const Resposta = await fetch("/abort", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                comando: "abortar",
+                senha: SenhaSalva()
+            })
+        })
+
+
+        if (!Resposta.ok) {
+            DisplayCustomMessage("ERRO DE AUTENTICAÇÃO");
+            return
+        }
+
+        const json = await Resposta.json()
+
+        if (json) {
+            DisplayCustomMessage("ABORTAGEM EM PROCESSO")
+        }
+    } catch (error) {
+        DisplayCustomMessage("Sem Conexão com o Servidor.")
+    }
+}
+
+Botao_Lancamento.addEventListener("click", IniciarLancamento);
+Botao_Abortar.addEventListener("click", AbortarLancamento);
 

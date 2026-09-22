@@ -1,6 +1,7 @@
 #include <WiFi.h>
 #include <WebServer.h>
-#include <WiFiManager.h> 
+#include <ArduinoJson.h>
+
 WebServer server(80);
 
 //Site necessário em uma váriavel
