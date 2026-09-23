@@ -112,3 +112,117 @@
 </body>
 
 </html>
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Principal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="grids.css">
+</head>
+
+<body>
+
+    <div class="popup-senha">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 centertext">
+                    <input type="password" placeholder="Digite a senha: ..." class="input-senha">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 centertext">
+                    <h4 class="display-senha-incorreta" >ERRO: Senha inválida, tente novamente</h4>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 centertext" style="gap: 10px;">
+                    <button class="botao-enviar-senha" >Enviar</button>
+                    <button class="botao-sou-visitante">Sou Visitante</button>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 15px;">
+                <div class="col-12 centertext">
+                    <h3 class="popup-custom-message"></h3>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 centertext topo-text">
+                <h1>MENU DE CONTROLE</h1>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="container centertext" style="margin-top: 25px; gap: 65px;">
+        <div class="progress-container">
+            <div class="progress-circle-pressao">
+                <h1><span class="progress-value-pressao">10%</span></h1>
+                <h2><span class="descritive-value">PRESSAO</span></h2>
+            </div>
+        </div>
+
+        
+        <div class="progress-container">
+            <div class="progress-circle-countdown">
+                <h3><span class="progress-value-countdown">AGUARDANDO</span></h3>
+                <h2><span class="descritive-value">COUNTDOWN</span></h2>
+            </div>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-circle-status">
+                <h3><span class="progress-value-status">ABORTANDO</span></h3>
+                <h2><span class="descritive-value">STATUS</span></h2>
+            </div>
+        </div>
+
+        
+
+
+    </div>
+
+
+
+    <div class="container" style="margin-top: 40px;">
+        <div class="row centertext">
+
+
+            <div class="centertext col-6">
+                <button class="botao-lancamento">INICIAR LANÇAMENTO</button>
+            </div>
+
+            <div class="centertext col-6">
+                <button class="botao-abortar">ABORTAR</button>
+            </div>
+        </div>
+
+
+        <div class="row" style="margin-top: 25px;"> 
+            <div class="col-12 centertext">
+                <h3><span class="custom-mensagem"></span></h3>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script src="handler.js"></script>
+
+
+
+
+</body>
+
+</html>

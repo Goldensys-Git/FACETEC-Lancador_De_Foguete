@@ -221,3 +221,226 @@ body{
   font-weight: 200;
   display: none;
 }
+
+@keyframes MoveFundo {
+    0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+
+
+body{
+    background: linear-gradient(45deg, #9182e4, #765ece, rgb(45, 43, 196));
+    min-height: 100vh;
+    animation: MoveFundo 15s ease infinite;
+    background-size: 400% 400%;
+}
+
+
+
+
+
+.popup-senha{
+  position: fixed; /*Relaciona a div com a janela do navegador*/
+  width: 100%; /*100% viewport width*/
+  height: 100%; /*100% viewport height*/
+  z-index: 1; /*"Profundidade" do elemento*/
+  background-color: rgba(0, 0, 0, 0.85);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.input-senha{
+  width: 300px;
+  height: 35px;
+
+  font-size: 16px;
+  border: 2.5px solid rgb(20, 80, 5);
+  border-radius: 2px;
+  outline: none; /*Remove outline padrão do browser*/
+
+  
+}
+
+.input-senha:focus{
+  border-color: #0066cc;
+}
+
+.botao-enviar-senha,
+.botao-sou-visitante{
+  height: 60px;
+  width: 140px;
+  font-weight: 600;
+}
+
+
+.botao-enviar-senha{
+  background-color: rgb(0, 255, 0);
+}
+
+.botao-sou-visitante{
+  background-color: rgb(0, 255, 242);
+}
+
+
+.display-senha-incorreta{
+  color: red;
+  font-weight: 600;
+  display: none;
+}
+
+.progress-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.centertext{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.topo-text{
+  color: white;
+  font-weight: bold;
+}
+
+
+
+
+
+
+.progress-circle-pressao,
+.progress-circle-countdown,
+.progress-circle-status{
+    width: 200px;
+    height: 100px;
+    border-radius: 120px 120px 0 0;
+
+    position: relative;
+
+    --progress: 10deg; /*Variável dentro da classe*/
+}
+
+.progress-circle-status::before,
+.progress-circle-pressao::before,
+.progress-circle-countdown::before{
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  border-radius: 100px 100px 0 0;
+
+  width: 160px;
+  height: 80px;
+
+  background-color: #0a1410;
+  
+}
+
+.progress-circle-pressao{
+      background: conic-gradient( 
+      from 270deg at 50% 100%,
+      rgb(251, 255, 0) var(--progress),
+      rgb(94, 94, 94) var(--progress)
+    );
+}
+
+.progress-circle-countdown{
+  background-color: red;
+}
+
+.progress-circle-status{
+  background-color: green;
+}
+
+.progress-value-countdown,
+.progress-value-status,
+.progress-value-pressao{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fffefe;
+    bottom: 10px;
+    /* z-index: 1; */
+}
+
+
+.botao-lancamento,
+.botao-abortar{
+  display: none; /*esconde os botões*/
+  width: 250px;
+  border-radius: 25px;
+}
+
+.descritive-value{
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  color: white;
+}
+
+.botao-lancamento{
+  background-color: rgb(64, 226, 49);
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 15px 32px;
+
+  
+}
+
+.botao-sou-visitante:active,
+.botao-enviar-senha:active,
+.botao-lancamento:active,
+.botao-abortar:active{
+  transform: scale(0.90);
+}
+
+.botao-abortar{
+  background-color: rgb(248, 8, 8);
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 15px 32px;
+}
+
+/* .button {
+  background-color: #04AA6D;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+} */
+
+.custom-mensagem,
+.popup-custom-message{
+  color: red;
+  background-color: black;
+  font-weight: 200;
+  display: none;
+}
