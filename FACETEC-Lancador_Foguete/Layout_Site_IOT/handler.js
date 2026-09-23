@@ -29,6 +29,8 @@ const Botao_Lancamento = document.querySelector(".botao-lancamento");
 
 const Botao_Abortar = document.querySelector(".botao-abortar");
 
+const Botao_Reset = document.querySelector(".botao-reset");
+
 
 
 
@@ -38,6 +40,8 @@ function Autorizado() {
     Popup_Senha.style.display = "none";
     Botao_Lancamento.style.display = "inline-block";
     Botao_Abortar.style.display = "inline-block";
+    Botao_Reset.style.display = "inline-block";
+
 }
 
 function SouVisitante() {
@@ -53,6 +57,9 @@ function MostrarSenhaInvalida() {
 function ValidarAcesso() {
     if (!sessionStorage.getItem("SenhaAutorizada")) {
         Popup_Senha.style.display = "flex";
+    }
+    else {
+        Autorizado();
     }
 }
 
@@ -372,3 +379,33 @@ async function AbortarLancamento() {
 Botao_Lancamento.addEventListener("click", IniciarLancamento);
 Botao_Abortar.addEventListener("click", AbortarLancamento);
 
+
+
+async function ResetSistema (){
+    try {
+        const Resposta = await fetch("/reset", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                comando: "reset",
+                senha: SenhaSalva()
+            })
+        })
+
+        if (Resposta.ok) {
+            const json = await Resposta.json()
+        }
+        else{
+            DisplayCustomMessage("ERRO DE AUTENTICAÇÃO");
+            return
+        }
+
+
+    } catch (error) {
+        DisplayCustomMessage("Sem Conexão com o Servidor.")
+    }
+}
+
+Botao_Reset.addEventListener("click", ResetSistema);

@@ -381,7 +381,8 @@ body{
 
 
 .botao-lancamento,
-.botao-abortar{
+.botao-abortar,
+.botao-reset{
   display: none; /*esconde os botões*/
   width: 250px;
   border-radius: 25px;
@@ -410,11 +411,22 @@ body{
 .botao-sou-visitante:active,
 .botao-enviar-senha:active,
 .botao-lancamento:active,
-.botao-abortar:active{
+.botao-abortar:active,
+.botao-reset:active{
   transform: scale(0.90);
 }
 
 .botao-abortar{
+  background-color: rgb(248, 8, 8);
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 15px 32px;
+}
+
+.botao-reset{
   background-color: rgb(248, 8, 8);
   border: none;
   color: white;
