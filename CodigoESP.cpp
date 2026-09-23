@@ -2,7 +2,7 @@
 #include <ArduinoJson.h>
 #include <WebServer.h>
 #include <WiFi.h>
-#include <WiFiManager.h>
+
 
 
 /*
@@ -405,7 +405,13 @@ void HandleRoot() {
 
 
 std::pair<String, int> GetMessage() {
-  return {CustomMessageAtual, CustomMessageDurationAtual};
+  String message = CustomMessageAtual;
+  int Duration = CustomMessageDurationAtual;
+
+  CustomMessageAtual = "";
+  CustomMessageDurationAtual = 0;
+
+  return {message, Duration};
 }
 
 void SetNewMessage(String message, int duration = 0) {
@@ -1271,7 +1277,7 @@ void readSerial()
 // SETUP
 // ==========================================================
 
-WiFiManager wm;
+
 
 void setup()
 {
@@ -1279,6 +1285,7 @@ void setup()
 
 
   /*SERVIDOR*/
+  WiFi.softAP(ssid, password);
   server.on("/", HTTP_GET, HandleRoot);
   server.on("/login", HTTP_POST, EfetuaLogin);
   server.on("/status", HTTP_GET, EnviaStatus);
@@ -1286,12 +1293,9 @@ void setup()
   server.on("/abort", HTTP_POST, RecebimentoAbort);
   server.on("/reset", HTTP_POST, RecebimentoReset);
 
-
-  wm.autoConnect(ssid, password);
-  server.begin();
  
-
-
+  server.begin();
+  Serial.println(WiFi.softAPIP());
 
   // ========================================================
   // LEDs
